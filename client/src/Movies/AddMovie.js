@@ -10,11 +10,9 @@ const initialMovieDetails = {
     stars: []
 };
 
-const UpdateMovie = (props) => {
+const AddMovie = (props) => {
     const [ movieDetails, setMovieDetails ] = useState(initialMovieDetails)
-    const { id } = useParams();
     const history = useHistory();
-    const { setMovieList } = props;
 
     const inputChange = evt => {
         setMovieDetails({
@@ -23,34 +21,44 @@ const UpdateMovie = (props) => {
         });
     };
 
-    const handleSubmit = evt => {
-        evt.preventDefault();
-        axios  
-        .put(`http://localhost:5000/api/movies/${id}`, movieDetails)
+    const postNewMovie = () => {
+        const newMovie = {
+            id: movieDetails.id,
+            title: movieDetails.title,
+            director: movieDetails.director,
+            metascore: movieDetails.metascore,
+            stars: movieDetails.stars
+        }
+
+        axios
+        .post(`http://localhost:5000/api/movies`, newMovie)
         .then(res => {
             setMovieDetails(res.data);
-            history.push(`/`);
+            history.push("/");
         })
         .catch(err => {
             console.log(err)
-        });
-    };
+        })
+    }
 
-    useEffect(() => {
-        axios
-        .get(`http://localhost:5000/api/movies/${id}`)
-        .then(res => {
-            setMovieList(res.data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }, [])
+    // const handleSubmit = evt => {
+    //     evt.preventDefault();
+    //     axios  
+       
+    //     .then(res => {
+    //         setMovieDetails(res.data);
+    //         history.push("/");
+    //     })
+    //     .catch(err => {
+    //         console.log(err)
+    //     });
+    // };
+
 
     return (
         <div>
-            <h2>Update Movie Details</h2>
-            <form onSubmit={handleSubmit}>
+            <h2>Add New Movie</h2>
+            <form onSubmit={postNewMovie}>
                     <input
                         name="title"
                         value={movieDetails.title}
@@ -83,10 +91,10 @@ const UpdateMovie = (props) => {
                         placeholder="actors" 
                     />
              
-                <button className="update-button">Update</button>
+                <button className="add-button">Add Movie</button>
             </form>
         </div>
     );
 };
 
-export default UpdateMovie;
+export default AddMovie;
