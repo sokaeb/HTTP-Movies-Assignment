@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { useHistory, useParams } from "react-router-dom";
 
 const initialMovieDetails = {
+    id: "",
     title: "",
     director: "",
-    metascore: ""
+    metascore: "",
+    stars: []
 };
 
-function UpdateMovie(props){
+const UpdateMovie = (props) => {
     const [ movieDetails, setMovieDetails ] = useState(initialMovieDetails)
     const { id } = useParams();
     const history = useHistory();
@@ -20,15 +22,26 @@ function UpdateMovie(props){
         });
     };
 
-    const handleSubmit = e => {
-        e.preventDefault();
+    const handleSubmit = evt => {
+        evt.preventDefault();
         axios  
         .put(`http://localhost:5000/api/movies/${id}`, movieDetails)
-        .then(res => console.log(res))
+        .then(res => {
+            setMovieDetails(res.data);
+            history.push(`/`);
+        })
         .catch(err => {
             console.log(err)
+        });
+    };
+
+    useEffect(() => {
+        axios
+        .get(`http://localhost:5000/api/movies/${id}`)
+        .then(res => {
+            console.log(res)
         })
-    }
+    })
 
     return (
         <div>
@@ -36,7 +49,7 @@ function UpdateMovie(props){
             <form onSubmit={handleSubmit}>
                     <input
                         name="title"
-                        value=""
+                        value={movieDetails.title}
                         onChange={inputChange}
                         type="text" 
                         placeholder="movie title"
@@ -44,7 +57,7 @@ function UpdateMovie(props){
             
                     <input 
                         name="director"
-                        value=""
+                        value={movieDetails.director}
                         onChange={inputChange}
                         type="text"
                         placeholder="director" 
@@ -52,10 +65,18 @@ function UpdateMovie(props){
  
                     <input 
                         name="metascore"
-                        value=""
+                        value={movieDetails.metascore}
                         onChange={inputChange}
                         type="text"
                         placeholder="metascore" 
+                    />
+
+                    <input 
+                        name="actors"
+                        value={movieDetails.stars}
+                        onChange={inputChange}
+                        type="text"
+                        placeholder="actors" 
                     />
              
                 <button className="update-button">Update</button>
