@@ -28,7 +28,7 @@ function Movie(props) {
     return <div>Loading movie information...</div>;
   }
   
-  const handleDelete = evt => {
+  const handleDelete = (evt) => {
     evt.preventDefault();
     axios
       .delete(`http://localhost:5000/api/movies/${movie.id}`)
@@ -41,6 +41,8 @@ function Movie(props) {
         console.log(err)
       });
   };
+
+
 
   return (
     <div className="save-wrapper">
