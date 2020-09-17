@@ -13,6 +13,8 @@ const initialMovieDetails = {
 const AddMovie = (props) => {
     const [ movieDetails, setMovieDetails ] = useState(initialMovieDetails)
     const history = useHistory();
+    const { id } = useParams();
+    const { setMovieList } = props;
 
     const inputChange = evt => {
         setMovieDetails({
@@ -21,7 +23,8 @@ const AddMovie = (props) => {
         });
     };
 
-    const postNewMovie = () => {
+    const postNewMovie = (e) => {
+        e.preventDefault();
         const newMovie = {
             id: movieDetails.id,
             title: movieDetails.title,
@@ -33,27 +36,14 @@ const AddMovie = (props) => {
         axios
         .post(`http://localhost:5000/api/movies`, newMovie)
         .then(res => {
-            setMovieDetails(res.data);
+            console.log(res)
+            setMovieList(res.data);
             history.push("/");
         })
         .catch(err => {
             console.log(err)
         })
     }
-
-    // const handleSubmit = evt => {
-    //     evt.preventDefault();
-    //     axios  
-       
-    //     .then(res => {
-    //         setMovieDetails(res.data);
-    //         history.push("/");
-    //     })
-    //     .catch(err => {
-    //         console.log(err)
-    //     });
-    // };
-
 
     return (
         <div>
@@ -84,7 +74,7 @@ const AddMovie = (props) => {
                     />
 
                     <input 
-                        name="actors"
+                        name="stars"
                         value={movieDetails.stars}
                         onChange={inputChange}
                         type="text"

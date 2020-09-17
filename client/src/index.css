@@ -92,6 +92,19 @@ body {
   color: white;
 }
 
+.add-button{
+  position: absolute;
+  right: 25px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: rgb(108, 214, 228);
+  text-transform: uppercase;
+}
+.add-button:hover {
+  background-color: rgb(24, 7, 179);
+  color: white;
+}
+
 .home-button {
   padding: 5px 10px;
   background-color: lightskyblue;

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import { useHistory, useParams } from "react-router-dom";
 
 const initialMovieDetails = {
     id: "",
     title: "",
     director: "",
-    metascore: "",
+    metascore: "", 
     stars: []
 };
 
@@ -14,7 +14,7 @@ const UpdateMovie = (props) => {
     const [ movieDetails, setMovieDetails ] = useState(initialMovieDetails)
     const { id } = useParams();
     const history = useHistory();
-    const { setMovieList } = props;
+    const { setMovieList, movieList } = props;
 
     const inputChange = evt => {
         setMovieDetails({
@@ -28,19 +28,30 @@ const UpdateMovie = (props) => {
         axios  
         .put(`http://localhost:5000/api/movies/${id}`, movieDetails)
         .then(res => {
-            setMovieDetails(res.data);
-            history.push(`/`);
+            // console.log('res', res)
+            // console.log('movie deets', movieDetails)
+            // console.log('movieList should be array', movieList)
+            setMovieList(movieList.map((item) => {
+                if(item.id == id) {
+                    return movieDetails
+                } else {
+                    return item
+                }
+            }))
+            history.push("/");
         })
         .catch(err => {
             console.log(err)
         });
     };
 
+
+    // this makes the movieDetails form populate with the original movie details
     useEffect(() => {
         axios
         .get(`http://localhost:5000/api/movies/${id}`)
         .then(res => {
-            setMovieList(res.data)
+            setMovieDetails(res.data)
         })
         .catch(err => {
             console.log(err)
@@ -76,7 +87,7 @@ const UpdateMovie = (props) => {
                     />
 
                     <input 
-                        name="actors"
+                        name="stars"
                         value={movieDetails.stars}
                         onChange={inputChange}
                         type="text"

@@ -17,7 +17,7 @@ function MovieList({ movies }) {
       }
 
       <div className="add-button"  onClick={() => history.push("/add-movie")}>
-        Add Movie
+        Add New Movie
       </div>
     </div>
   );
