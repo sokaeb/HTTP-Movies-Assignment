@@ -53,7 +53,7 @@ body {
   width: 75%;
   margin: 1rem auto;
 }
-.save-button {
+.save-button{
   position: absolute;
   top: 25px;
   right: 25px;
@@ -63,6 +63,45 @@ body {
 }
 .save-button:hover {
   background-color: green;
+  color: white;
+}
+
+.edit-button{
+  position: absolute;
+  /* top: 25px; */
+  /* right: 25px; */
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: rgb(179, 126, 228);
+}
+.edit-button:hover {
+  background-color: rgb(66, 14, 114);
+  color: white;
+}
+
+.delete-button{
+  position: absolute;
+  right: 25px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: rgb(240, 106, 106);
+  text-transform: uppercase;
+}
+.delete-button:hover {
+  background-color: rgb(179, 7, 7);
+  color: white;
+}
+
+.add-button{
+  position: absolute;
+  right: 25px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: rgb(108, 214, 228);
+  text-transform: uppercase;
+}
+.add-button:hover {
+  background-color: rgb(24, 7, 179);
   color: white;
 }
 
